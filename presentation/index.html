@@ -24,10 +24,9 @@
               800: '#1e40af',
               900: '#1e3a8a',
             },
-            phase1: '#3b82f6', // Blue
-            phase2: '#10b981', // Emerald
-            phase3: '#8b5cf6', // Purple
-            phase4: '#f59e0b', // Amber
+            simulation: '#10b981', // Emerald
+            development: '#3b82f6', // Blue
+            gaming: '#f59e0b', // Amber
           }
         }
       }
@@ -42,241 +41,772 @@
       font-family: 'Inter', 'Noto Sans SC', sans-serif;
     }
     .gradient-bg {
-      background: radial-gradient(circle at 50% 0%, rgba(30, 58, 138, 0.15) 0%, rgba(15, 23, 42, 0) 50%), #0f172a;
+      background: radial-gradient(circle at 50% 0%, rgba(30, 58, 138, 0.12) 0%, rgba(15, 23, 42, 0) 50%), #0b0f19;
     }
-    .timeline-line {
-      background: linear-gradient(to bottom, #3b82f6, #10b981, #8b5cf6, #f59e0b);
+    html.light .gradient-bg {
+      background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.16) 0%, rgba(255, 255, 255, 0) 48%), #f8fafc;
+      color: #0f172a;
+    }
+    html.light [class*="bg-slate-950"] {
+      background-color: rgba(255, 255, 255, 0.86) !important;
+    }
+    html.light [class*="bg-slate-900"] {
+      background-color: rgba(241, 245, 249, 0.86) !important;
+    }
+    html.light [class*="bg-slate-800"] {
+      background-color: rgba(226, 232, 240, 0.92) !important;
+    }
+    html.light [class*="border-slate-800"],
+    html.light [class*="border-slate-700"] {
+      border-color: rgba(203, 213, 225, 0.9) !important;
+    }
+    html.light [class*="text-slate-100"],
+    html.light [class*="text-white"] {
+      color: #0f172a !important;
+    }
+    html.light [class*="text-slate-200"],
+    html.light [class*="text-slate-300"] {
+      color: #334155 !important;
+    }
+    html.light [class*="text-slate-400"],
+    html.light [class*="text-slate-500"],
+    html.light [class*="text-slate-700"] {
+      color: #64748b !important;
+    }
+    html.light [class*="bg-brand-500"][class*="text-white"] {
+      color: #ffffff !important;
+    }
+    html.light .bg-gradient-to-r.bg-clip-text {
+      color: transparent !important;
+    }
+    html.light .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(226, 232, 240, 0.5);
+    }
+    html.light .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(100, 116, 139, 0.28);
+    }
+    html.light .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(100, 116, 139, 0.45);
+    }
+    /* Custom scrollbar for sidebar */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.3);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.15);
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(148, 163, 184, 0.3);
     }
   </style>
 </head>
-<body class="gradient-bg text-slate-100 min-h-screen selection:bg-brand-500 selection:text-white">
+<body class="gradient-bg text-slate-100 min-h-screen selection:bg-brand-500 selection:text-white flex flex-col overflow-x-hidden">
 
   <!-- Header -->
-  <header class="border-b border-slate-800/80 backdrop-blur-md sticky top-0 z-50 bg-slate-950/80">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+  <header class="border-b border-slate-800/60 backdrop-blur-md bg-slate-950/80 shrink-0">
+    <div class="max-w-[1600px] mx-auto px-6 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-3">
         <span class="text-2xl">🤖</span>
-        <span class="font-extrabold text-xl bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent tracking-tight">
+        <span class="font-extrabold text-lg bg-gradient-to-r from-blue-400 via-indigo-400 to-emerald-400 bg-clip-text text-transparent tracking-tight">
           AI Town & Multi-Agent Simulations
         </span>
+        <span class="text-slate-700">|</span>
+        <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+          1970 - 2026 发展轨迹全景
+        </span>
       </div>
-      <div class="text-sm text-slate-400 font-medium">
-        组会汇报材料 · 发展脉络全景
+      <div class="flex items-center space-x-6">
+        <div class="text-xs text-slate-400 font-medium">
+          组会报告材料 · 三大分类结构化汇报
+        </div>
+        <button onclick="toggleTheme()" id="theme-toggle" class="px-3.5 py-1.5 rounded-lg bg-slate-900 text-slate-300 hover:bg-slate-800 hover:text-white text-xs font-bold border border-slate-800 transition-all">
+          🌙 深色模式
+        </button>
+        <button onclick="showOverview()" class="px-3.5 py-1.5 rounded-lg bg-brand-500/10 text-brand-400 hover:bg-brand-500/20 text-xs font-bold border border-brand-500/20 transition-all">
+          📊 全景对比看板
+        </button>
       </div>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="relative py-16 overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-      <span class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20 uppercase tracking-wider">
-        Meeting Report
-      </span>
-      <h1 class="mt-4 text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white">
-        AI 小镇与多智能体社会模拟<br>
-        <span class="bg-gradient-to-r from-blue-400 via-emerald-400 to-amber-400 bg-clip-text text-transparent">
-          发展轨迹与技术演进全景报告
-        </span>
-      </h1>
-      <p class="mt-6 max-w-3xl mx-auto text-lg text-slate-400 leading-relaxed">
-        本报告系统性梳理了从2023年初多智能体协同萌芽，到2026年最新百万级仿真与AI原生游戏生态的 17 个关键里程碑节点。点击任意节点即可查看其核心架构、真实配图与关键社会学贡献。
-      </p>
-    </div>
-  </section>
+  <!-- Main Workspace -->
+  <div class="flex-1 flex max-w-[1600px] w-full mx-auto px-6 py-6 gap-6 overflow-visible">
 
-  <!-- Phases Overview -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-    <h2 class="text-2xl font-bold text-white mb-8 flex items-center space-x-2">
-      <span class="text-brand-400">📊</span>
-      <span>四大演进阶段</span>
-    </h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <!-- Phase 1 -->
-      <div class="bg-slate-900/60 border border-blue-500/20 rounded-2xl p-6 hover:border-blue-500/40 transition-all duration-300">
-        <div class="flex items-center justify-between mb-4">
-          <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Phase 01</span>
-          <span class="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 font-bold text-sm">1</span>
-        </div>
-        <h3 class="text-lg font-bold text-white mb-2">单体与双体协作萌芽</h3>
-        <p class="text-sm text-slate-400 leading-relaxed">探索大模型自主执行循环与双智能体角色扮演协作，确立了工具调用与长期记忆的雏形。</p>
-        <div class="mt-4 text-xs text-blue-400 font-semibold">代表作：CAMEL, AutoGPT</div>
+    <!-- Sidebar Navigation (Left) -->
+    <aside class="w-80 flex flex-col border border-slate-800/60 bg-slate-950/40 rounded-2xl p-4 shrink-0 overflow-hidden">
+      <div class="mb-4 shrink-0">
+        <button onclick="showOverview()" id="btn-overview-nav" class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold bg-brand-500 text-white shadow-lg shadow-brand-500/10 transition-all duration-200">
+          <span class="flex items-center space-x-2">
+            <span>📊</span>
+            <span>全景对比看板</span>
+          </span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
       </div>
-      <!-- Phase 2 -->
-      <div class="bg-slate-900/60 border border-emerald-500/20 rounded-2xl p-6 hover:border-emerald-500/40 transition-all duration-300">
-        <div class="flex items-center justify-between mb-4">
-          <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Phase 02</span>
-          <span class="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400 font-bold text-sm">2</span>
-        </div>
-        <h3 class="text-lg font-bold text-white mb-2">群体模拟与经典架构</h3>
-        <p class="text-sm text-slate-400 leading-relaxed">斯坦福小镇奠定“记忆-反思-规划”经典认知架构，具身智能在3D沙盒中实现无监督终身学习。</p>
-        <div class="mt-4 text-xs text-emerald-400 font-semibold">代表作：Smallville, Voyager, AI Town</div>
-      </div>
-      <!-- Phase 3 -->
-      <div class="bg-slate-900/60 border border-purple-500/20 rounded-2xl p-6 hover:border-purple-500/40 transition-all duration-300">
-        <div class="flex items-center justify-between mb-4">
-          <span class="text-xs font-bold text-purple-400 uppercase tracking-wider">Phase 03</span>
-          <span class="w-8 h-8 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-400 font-bold text-sm">3</span>
-        </div>
-        <h3 class="text-lg font-bold text-white mb-2">垂直领域与社会工程</h3>
-        <p class="text-sm text-slate-400 leading-relaxed">引入标准作业程序（SOP）和多智能体协同网络，在软件工程、商业决策等垂直领域展现极高实用价值。</p>
-        <div class="mt-4 text-xs text-purple-400 font-semibold">代表作：ChatDev, MetaGPT, TinyTroupe</div>
-      </div>
-      <!-- Phase 4 -->
-      <div class="bg-slate-900/60 border border-amber-500/20 rounded-2xl p-6 hover:border-amber-500/40 transition-all duration-300">
-        <div class="flex items-center justify-between mb-4">
-          <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Phase 04</span>
-          <span class="w-8 h-8 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-400 font-bold text-sm">4</span>
-        </div>
-        <h3 class="text-lg font-bold text-white mb-2">大规模模拟与混合自治</h3>
-        <p class="text-sm text-slate-400 leading-relaxed">仿真规模迈向十万至百万级，自主涌现出职业、法律、宗教，人机共存与AI原生游戏时代来临。</p>
-        <div class="mt-4 text-xs text-amber-400 font-semibold">代表作：Project Sid, OASIS, AIvilization</div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Filter & Main Content -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-    <!-- Filter Tabs -->
-    <div class="flex flex-wrap items-center justify-between gap-4 mb-8 border-b border-slate-800 pb-4">
-      <h2 class="text-2xl font-bold text-white flex items-center space-x-2">
-        <span class="text-brand-400">📍</span>
-        <span>发展节点全景</span>
-      </h2>
-      <div class="flex flex-wrap gap-2" id="filter-container">
-        <button onclick="filterPhase('all')" id="btn-all" class="px-4 py-2 rounded-xl text-sm font-semibold bg-brand-500 text-white transition-all duration-200">
-          全部节点 (17)
-        </button>
-        <button onclick="filterPhase('phase1')" id="btn-phase1" class="px-4 py-2 rounded-xl text-sm font-semibold bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-white transition-all duration-200 border border-slate-800">
-          第一阶段 (2)
-        </button>
-        <button onclick="filterPhase('phase2')" id="btn-phase2" class="px-4 py-2 rounded-xl text-sm font-semibold bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-white transition-all duration-200 border border-slate-800">
-          第二阶段 (4)
-        </button>
-        <button onclick="filterPhase('phase3')" id="btn-phase3" class="px-4 py-2 rounded-xl text-sm font-semibold bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-white transition-all duration-200 border border-slate-800">
-          第三阶段 (3)
-        </button>
-        <button onclick="filterPhase('phase4')" id="btn-phase4" class="px-4 py-2 rounded-xl text-sm font-semibold bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-white transition-all duration-200 border border-slate-800">
-          第四阶段 (8)
-        </button>
+      <div class="flex-1 overflow-y-auto custom-scrollbar space-y-4 pr-1">
+        <!-- Category: 为了模拟 -->
+        <div>
+          <div class="flex items-center justify-between px-2 mb-2">
+            <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest flex items-center space-x-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span>为了模拟 (Simulation)</span>
+            </span>
+            <span class="text-[10px] font-mono font-bold text-slate-500 bg-slate-900 px-1.5 py-0.5 rounded-md" id="count-simulation">8</span>
+          </div>
+          <nav class="space-y-1" id="nav-simulation">
+            <!-- Dynamically populated -->
+          </nav>
+        </div>
+
+        <!-- Category: 为了开发 -->
+        <div>
+          <div class="flex items-center justify-between px-2 mb-2">
+            <span class="text-xs font-bold text-blue-400 uppercase tracking-widest flex items-center space-x-1.5">
+              <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+              <span>为了开发 (Development)</span>
+            </span>
+            <span class="text-[10px] font-mono font-bold text-slate-500 bg-slate-900 px-1.5 py-0.5 rounded-md" id="count-development">6</span>
+          </div>
+          <nav class="space-y-1" id="nav-development">
+            <!-- Dynamically populated -->
+          </nav>
+        </div>
+
+        <!-- Category: 为了游戏 -->
+        <div>
+          <div class="flex items-center justify-between px-2 mb-2">
+            <span class="text-xs font-bold text-amber-400 uppercase tracking-widest flex items-center space-x-1.5">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+              <span>为了游戏 (Gaming)</span>
+            </span>
+            <span class="text-[10px] font-mono font-bold text-slate-500 bg-slate-900 px-1.5 py-0.5 rounded-md" id="count-gaming">5</span>
+          </div>
+          <nav class="space-y-1" id="nav-gaming">
+            <!-- Dynamically populated -->
+          </nav>
+        </div>
       </div>
-    </div>
+    </aside>
 
-    <!-- Milestones Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="milestones-grid">
-      <!-- Dynamically generated by JS -->
-    </div>
-  </main>
+    <!-- Content Area (Right) -->
+    <main class="flex-1 overflow-y-auto custom-scrollbar pr-2 space-y-6" id="main-workspace">
 
-  <!-- Footer -->
-  <footer class="bg-slate-950 border-t border-slate-900 py-12 text-center text-sm text-slate-500">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <p>© 2026 AI 小镇与多智能体社会模拟发展脉络组会汇报材料</p>
-      <p class="mt-2 text-xs text-slate-600">基于真实学术论文、开源项目及商业实践整理</p>
-    </div>
-  </footer>
+      <!-- STATE A: OVERVIEW DASHBOARD -->
+      <div id="overview-panel" class="space-y-8">
+
+        <!-- Hero Banner -->
+        <div class="bg-gradient-to-r from-slate-900 via-indigo-950/30 to-slate-900 border border-slate-800/80 rounded-3xl p-8 relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-80 h-80 bg-brand-500/5 rounded-full blur-3xl -z-10"></div>
+          <span class="px-3 py-1 rounded-full text-xs font-semibold bg-brand-500/10 text-brand-400 border border-brand-500/20 uppercase tracking-wider">
+            Group Meeting Presentation
+          </span>
+          <h1 class="mt-4 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
+            AI 小镇与多智能体社会模拟<br>
+            <span class="bg-gradient-to-r from-blue-400 via-emerald-400 to-amber-400 bg-clip-text text-transparent">
+              三大分类与技术演进全景报告
+            </span>
+          </h1>
+          <p class="mt-4 text-slate-400 leading-relaxed text-base max-w-4xl">
+            大模型多智能体（LLM Multi-Agent）社会模拟自2023年爆发以来，已经从学术界玩具演进为跨学科的科学工具和商业原生游戏。本报告将 19 个里程碑节点结构化地分类为**为了模拟**、**为了开发**和**为了游戏**三大板块，帮助您在组会汇报中层层递进、逻辑闭环。
+          </p>
+        </div>
+
+        <!-- Three Categories Cards -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Simulation Card -->
+          <div class="bg-slate-900/40 border border-emerald-500/20 rounded-2xl p-6 hover:border-emerald-500/40 transition-all duration-300">
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                为了模拟 (Simulation)
+              </span>
+              <span class="text-2xl">📊</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">计算社会学与政策评估</h3>
+            <p class="text-sm text-slate-400 leading-relaxed mb-4">
+              <strong>核心定位</strong>：把 Agent 当作人类社会的显微镜。通过模拟宏观群体行为的演化，来预测、解释、干预真实人类社会的规律。
+            </p>
+            <div class="text-xs text-slate-500 font-semibold space-y-1.5 border-t border-slate-800/60 pt-3">
+              <div><span class="text-emerald-400">●</span> <strong>技术侧重</strong>：记忆-反思-规划认知架构、分布式调度</div>
+              <div><span class="text-emerald-400">●</span> <strong>评估标准</strong>：实证对齐（统计学一致性）</div>
+              <div><span class="text-emerald-400">●</span> <strong>代表作</strong>：生命游戏, Stanford小镇, AI Town, AgentSociety</div>
+            </div>
+          </div>
+
+          <!-- Development Card -->
+          <div class="bg-slate-900/40 border border-blue-500/20 rounded-2xl p-6 hover:border-blue-500/40 transition-all duration-300">
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                为了开发 (Development)
+              </span>
+              <span class="text-2xl">⚙️</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">生产力工具与工作流自动化</h3>
+            <p class="text-sm text-slate-400 leading-relaxed mb-4">
+              <strong>核心定位</strong>：把 Agent 当作专业打工人。不关心 Agent 的日常生活，只关心如何高效、低成本、高确定性地解决复杂任务。
+            </p>
+            <div class="text-xs text-slate-500 font-semibold space-y-1.5 border-t border-slate-800/60 pt-3">
+              <div><span class="text-blue-400">●</span> <strong>技术侧重</strong>：强约束协作、SOP（标准作业程序）、工具调用</div>
+              <div><span class="text-blue-400">●</span> <strong>评估标准</strong>：任务成功率、Token 消耗成本</div>
+              <div><span class="text-blue-400">●</span> <strong>代表作</strong>：CAMEL, ChatDev, MetaGPT, WorldCraft</div>
+            </div>
+          </div>
+
+          <!-- Gaming Card -->
+          <div class="bg-slate-900/40 border border-amber-500/20 rounded-2xl p-6 hover:border-amber-500/40 transition-all duration-300">
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                为了游戏 (Gaming)
+              </span>
+              <span class="text-2xl">🎮</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">智能NPC与动态剧情自涌现</h3>
+            <p class="text-sm text-slate-400 leading-relaxed mb-4">
+              <strong>核心定位</strong>：把 Agent 当作活着的虚拟伴侣与造物主。关注玩家的沉浸感与可玩性，NPC 拥有私心、立场与真实行为。
+            </p>
+            <div class="text-xs text-slate-500 font-semibold space-y-1.5 border-t border-slate-800/60 pt-3">
+              <div><span class="text-amber-400">●</span> <strong>技术侧重</strong>：语义与数值/物理打通、编剧Agent、低延迟</div>
+              <div><span class="text-amber-400">●</span> <strong>评估标准</strong>：可信度、可玩性、玩家沉浸感</div>
+              <div><span class="text-amber-400">●</span> <strong>代表作</strong>：WorldBox, AIvilization, MagiScapes, Astrobuilder</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- The Trilemma of Agents (三元悖论) -->
+        <div class="bg-slate-900/40 border border-slate-800/80 rounded-3xl p-8 space-y-6">
+          <h2 class="text-xl font-bold text-white flex items-center space-x-2">
+            <span class="text-brand-400">🔺</span>
+            <span>智能体三元悖论 (The Trilemma of Agents)</span>
+          </h2>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            在多智能体系统设计中，存在一个类似区块链的**“三元悖论”**：任何一个系统都很难同时完美兼顾以下三个维度，必须根据其分类定位进行取舍。
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+            <div class="bg-slate-950/40 border border-slate-800/60 rounded-xl p-5 space-y-2">
+              <h4 class="text-sm font-bold text-white flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                <span>高确定性 (Determinism)</span>
+              </h4>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                要求行为严格可控，无幻觉，按预设逻辑输出。<strong>“为了开发”</strong>的系统极度追求此项，通过强 SOP 限制 Agent 自由度。
+              </p>
+            </div>
+            <div class="bg-slate-950/40 border border-slate-800/60 rounded-xl p-5 space-y-2">
+              <h4 class="text-sm font-bold text-white flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span>高拟真多样性 (Alignment & Variety)</span>
+              </h4>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                要求 Agent 展现出丰富的人类性格、自发社交和宏观涌现。<strong>“为了模拟”</strong>的系统极度追求此项，允许犯错和随机性，但绝不能性格同质化。
+              </p>
+            </div>
+            <div class="bg-slate-950/40 border border-slate-800/60 rounded-xl p-5 space-y-2">
+              <h4 class="text-sm font-bold text-white flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                <span>极低延迟与成本 (Low Latency & Cost)</span>
+              </h4>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                要求高并发、秒级响应和低运行成本。<strong>“为了游戏”</strong>的商业化产品极度追求此项，往往需要用轻量端侧模型（如 Qwen-7B）做极端优化。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Comparison Matrix -->
+        <div class="bg-slate-900/40 border border-slate-800/80 rounded-3xl p-8 space-y-6">
+          <h2 class="text-xl font-bold text-white flex items-center space-x-2">
+            <span class="text-brand-400">⚖️</span>
+            <span>三大维度核心技术对比矩阵</span>
+          </h2>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-sm">
+              <thead>
+                <tr class="border-b border-slate-800 text-slate-400 font-semibold">
+                  <th class="py-3 px-4">对比维度</th>
+                  <th class="py-3 px-4 text-emerald-400">为了模拟 (Simulation)</th>
+                  <th class="py-3 px-4 text-blue-400">为了开发 (Development)</th>
+                  <th class="py-3 px-4 text-amber-400">为了游戏 (Gaming)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800/50 text-slate-300">
+                <tr>
+                  <td class="py-4 px-4 font-semibold text-white">核心追求</td>
+                  <td class="py-4 px-4">宏观社会规律涌现、科学预测</td>
+                  <td class="py-4 px-4">任务成功率、生产力提效</td>
+                  <td class="py-4 px-4">玩家沉浸感、NPC可信度、可玩性</td>
+                </tr>
+                <tr>
+                  <td class="py-4 px-4 font-semibold text-white">Agent 自由度</td>
+                  <td class="py-4 px-4"><strong>高</strong>（允许犯错、自由社交）</td>
+                  <td class="py-4 px-4"><strong>极低</strong>（受 SOP 与流程强约束）</td>
+                  <td class="py-4 px-4"><strong>中等</strong>（在游戏规则边界内自由决策）</td>
+                </tr>
+                <tr>
+                  <td class="py-4 px-4 font-semibold text-white">核心技术栈</td>
+                  <td class="py-4 px-4">记忆-反思-规划、Ray分布式、向量检索</td>
+                  <td class="py-4 px-4">工具调用、代码执行、瀑布流研讨会</td>
+                  <td class="py-4 px-4">语义与数值打通、编剧Agent、端侧模型</td>
+                </tr>
+                <tr>
+                  <td class="py-4 px-4 font-semibold text-white">算力与延迟</td>
+                  <td class="py-4 px-4"><strong>高延迟、极高成本</strong>（离线异步运行）</td>
+                  <td class="py-4 px-4"><strong>中延迟、中成本</strong>（按需单次调用）</td>
+                  <td class="py-4 px-4"><strong>极低延迟、低成本</strong>（实时并发运行）</td>
+                </tr>
+                <tr>
+                  <td class="py-4 px-4 font-semibold text-white">评估与对齐</td>
+                  <td class="py-4 px-4">实证对齐（大五人格、统计学检验）</td>
+                  <td class="py-4 px-4">代码单元测试、Benchmark 跑分</td>
+                  <td class="py-4 px-4">玩家主观体验、留存率、UGC生成质量</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- STATE B: NODE DETAILS PANEL -->
+      <div id="node-panel" class="hidden space-y-8">
+
+        <!-- Title & Meta Banner -->
+        <div class="bg-slate-900/40 border border-slate-800/80 rounded-3xl p-8 relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-64 h-64 bg-brand-500/5 rounded-full blur-3xl -z-10"></div>
+          <div class="flex flex-wrap items-center gap-3 mb-4">
+            <span class="px-3 py-1 rounded-full text-xs font-bold border" id="node-category-badge">
+              <!-- Category -->
+            </span>
+            <span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700" id="node-date">
+              <!-- Date -->
+            </span>
+            <span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700" id="node-phase">
+              <!-- Phase -->
+            </span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight" id="node-title">
+            <!-- Title -->
+          </h1>
+          <p class="mt-4 text-slate-400 leading-relaxed text-base border-l-4 border-brand-500 pl-4" id="node-summary">
+            <!-- Summary -->
+          </p>
+
+          <!-- External Links -->
+          <div class="mt-6 flex flex-wrap gap-3 pt-6 border-t border-slate-800/60" id="node-links">
+            <!-- External Links -->
+          </div>
+        </div>
+
+        <!-- Real Screenshot / Architecture Diagram -->
+        <div class="bg-slate-900/40 border border-slate-800/80 rounded-3xl p-6 space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <h2 class="text-base font-bold text-white flex items-center space-x-2">
+              <span class="text-brand-400">🖼️</span>
+              <span>技术架构 / 实景演示</span>
+            </h2>
+            <div class="flex flex-wrap gap-2" id="node-image-tabs">
+              <!-- Image tabs -->
+            </div>
+          </div>
+          <div class="space-y-1">
+            <h3 class="text-sm font-bold text-slate-200" id="node-image-title">
+              <!-- Image title -->
+            </h3>
+            <p class="text-xs text-slate-500" id="node-image-caption">
+              <!-- Image caption -->
+            </p>
+          </div>
+          <div class="relative rounded-2xl overflow-hidden border border-slate-800 bg-slate-950 flex items-center justify-center min-h-[300px]">
+            <img id="node-image" src="" alt="Screenshot" class="max-h-[450px] object-contain w-full">
+          </div>
+          <p class="text-xs text-slate-500 text-center italic">
+            *图片优先选用官方运行截图、论文配图和仓库素材；缺少公开截图的节点使用结构化示意图补足
+          </p>
+        </div>
+
+        <!-- Core Architecture & Technical Principles -->
+        <div class="space-y-4">
+          <h2 class="text-lg font-bold text-white flex items-center space-x-2">
+            <span class="text-brand-400">⚙️</span>
+            <span>核心架构与技术原理</span>
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="node-architecture">
+            <!-- Architecture Cards -->
+          </div>
+        </div>
+
+        <!-- Key Contributions & Societal Implications -->
+        <div class="bg-slate-900/40 border border-slate-800/80 rounded-3xl p-8 space-y-4">
+          <h2 class="text-lg font-bold text-white flex items-center space-x-2">
+            <span class="text-brand-400">💡</span>
+            <span>关键贡献与对社会模拟的启示</span>
+          </h2>
+          <ul class="space-y-3 text-slate-300" id="node-contributions">
+            <!-- Contributions List -->
+          </ul>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="flex items-center justify-between pt-6 border-t border-slate-800/60">
+          <button id="prev-node-btn" onclick="navigateNode(-1)" class="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-950/50 hover:bg-slate-900 text-sm font-semibold text-slate-300 hover:text-white transition-all duration-200">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            <span>上一个节点</span>
+          </button>
+          <button id="next-node-btn" onclick="navigateNode(1)" class="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-950/50 hover:bg-slate-900 text-sm font-semibold text-slate-300 hover:text-white transition-all duration-200">
+            <span>下一个节点</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
 
   <!-- Load Data -->
   <script src="data.js"></script>
   <script>
-    // Map phase names to filter keys
-    const phaseMap = {
-      "第一阶段：单体与双体协作萌芽": "phase1",
-      "第二阶段：群体模拟与经典架构确立": "phase2",
-      "第三阶段：垂直领域与社会工程深化": "phase3",
-      "第四阶段：大规模模拟与混合自治时代": "phase4"
+    // State Management
+    let currentNodeId = null;
+    let currentImageIndex = 0;
+
+    function setTheme(theme) {
+      const isLight = theme === 'light';
+      document.documentElement.classList.toggle('light', isLight);
+      document.documentElement.classList.toggle('dark', !isLight);
+      localStorage.setItem('presentation-theme', theme);
+
+      const toggle = document.getElementById('theme-toggle');
+      if (toggle) {
+        toggle.innerText = isLight ? '☀️ 浅色模式' : '🌙 深色模式';
+        toggle.setAttribute('aria-label', isLight ? '切换到深色模式' : '切换到浅色模式');
+      }
+    }
+
+    function toggleTheme() {
+      const nextTheme = document.documentElement.classList.contains('light') ? 'dark' : 'light';
+      setTheme(nextTheme);
+    }
+
+    const categoryMap = {
+      "simulation": {
+        label: "为了模拟 (Simulation)",
+        badgeClass: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+        dotColor: "bg-emerald-500"
+      },
+      "development": {
+        label: "为了开发 (Development)",
+        badgeClass: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+        dotColor: "bg-blue-500"
+      },
+      "gaming": {
+        label: "为了游戏 (Gaming)",
+        badgeClass: "bg-amber-500/10 text-amber-400 border-amber-500/20",
+        dotColor: "bg-amber-500"
+      }
     };
 
-    const phaseColors = {
-      "phase1": "border-blue-500/30 hover:border-blue-500/60 text-blue-400 bg-blue-500/5",
-      "phase2": "border-emerald-500/30 hover:border-emerald-500/60 text-emerald-400 bg-emerald-500/5",
-      "phase3": "border-purple-500/30 hover:border-purple-500/60 text-purple-400 bg-purple-500/5",
-      "phase4": "border-amber-500/30 hover:border-amber-500/60 text-amber-400 bg-amber-500/5"
+    function getNodeImages(node) {
+      if (Array.isArray(node.imageSlides) && node.imageSlides.length > 0) {
+        return node.imageSlides;
+      }
+      return [{
+        type: "Image",
+        title: node.title,
+        src: node.image,
+        caption: "项目图片"
+      }];
+    }
+
+    function isGeneratedImage(image) {
+      return typeof image.src === 'string' && image.src.endsWith('.svg');
+    }
+
+    function getDefaultImageIndex(node) {
+      const images = getNodeImages(node);
+      if (images.length <= 1) return 0;
+
+      const firstFoundImageIndex = images.findIndex(image => !isGeneratedImage(image));
+      return firstFoundImageIndex >= 0 ? firstFoundImageIndex : 0;
+    }
+
+    const linkTypeMap = {
+      paper: {
+        label: "论文",
+        icon: "📄",
+        className: "text-blue-400 hover:text-blue-300 bg-blue-500/5 border-blue-500/10"
+      },
+      repo: {
+        label: "仓库",
+        icon: "💻",
+        className: "text-emerald-400 hover:text-emerald-300 bg-emerald-500/5 border-emerald-500/10"
+      },
+      official: {
+        label: "官网",
+        icon: "🌐",
+        className: "text-indigo-400 hover:text-indigo-300 bg-indigo-500/5 border-indigo-500/10"
+      },
+      steam: {
+        label: "Steam",
+        icon: "🎮",
+        className: "text-amber-400 hover:text-amber-300 bg-amber-500/5 border-amber-500/10"
+      },
+      video: {
+        label: "视频",
+        icon: "▶️",
+        className: "text-pink-400 hover:text-pink-300 bg-pink-500/5 border-pink-500/10"
+      },
+      demo: {
+        label: "演示",
+        icon: "🕹️",
+        className: "text-cyan-400 hover:text-cyan-300 bg-cyan-500/5 border-cyan-500/10"
+      },
+      docs: {
+        label: "文档",
+        icon: "📚",
+        className: "text-violet-400 hover:text-violet-300 bg-violet-500/5 border-violet-500/10"
+      },
+      source: {
+        label: "资料",
+        icon: "🔗",
+        className: "text-slate-300 hover:text-white bg-slate-500/5 border-slate-500/10"
+      }
     };
 
-    const phaseBadges = {
-      "phase1": "bg-blue-500/10 text-blue-400 border-blue-500/20",
-      "phase2": "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-      "phase3": "bg-purple-500/10 text-purple-400 border-purple-500/20",
-      "phase4": "bg-amber-500/10 text-amber-400 border-amber-500/20"
-    };
+    function escapeHTML(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
 
-    function renderMilestones(filter = 'all') {
-      const grid = document.getElementById('milestones-grid');
-      grid.innerHTML = '';
+    function getNodeLinks(node) {
+      const links = [];
+      if (node.paper) {
+        links.push({ type: "paper", label: node.paper.title, url: node.paper.url });
+      }
+      if (node.repo) {
+        links.push({ type: "repo", label: node.repo.name, url: node.repo.url });
+      }
+      if (Array.isArray(node.links)) {
+        links.push(...node.links);
+      }
+      return links;
+    }
+
+    function setNodeImage(index) {
+      const node = milestonesData.find(n => n.id === currentNodeId);
+      if (!node) return;
+
+      const images = getNodeImages(node);
+      currentImageIndex = Math.max(0, Math.min(index, images.length - 1));
+      const activeImage = images[currentImageIndex];
+
+      const imageEl = document.getElementById('node-image');
+      imageEl.src = activeImage.src;
+      imageEl.alt = `${node.title} - ${activeImage.title}`;
+
+      document.getElementById('node-image-title').innerText = activeImage.title;
+      document.getElementById('node-image-caption').innerText = activeImage.caption || '';
+
+      const tabsContainer = document.getElementById('node-image-tabs');
+      tabsContainer.innerHTML = '';
+      images.forEach((image, imageIndex) => {
+        const button = document.createElement('button');
+        const isActive = imageIndex === currentImageIndex;
+        button.type = 'button';
+        button.onclick = () => setNodeImage(imageIndex);
+        button.className = isActive
+          ? "px-3 py-1.5 rounded-lg bg-brand-500 text-white text-xs font-bold border border-brand-400 shadow-lg shadow-brand-500/10 transition-all"
+          : "px-3 py-1.5 rounded-lg bg-slate-950/60 text-slate-400 hover:text-white hover:bg-slate-800 text-xs font-bold border border-slate-800 transition-all";
+        button.innerText = images.length === 1 ? image.type : `${imageIndex + 1}. ${image.type}`;
+        tabsContainer.appendChild(button);
+      });
+    }
+
+    function populateNavigation() {
+      const navSimulation = document.getElementById('nav-simulation');
+      const navDevelopment = document.getElementById('nav-development');
+      const navGaming = document.getElementById('nav-gaming');
+
+      navSimulation.innerHTML = '';
+      navDevelopment.innerHTML = '';
+      navGaming.innerHTML = '';
+
+      let counts = { simulation: 0, development: 0, gaming: 0 };
 
       milestonesData.forEach(node => {
-        const phaseKey = phaseMap[node.phase];
-        if (filter !== 'all' && phaseKey !== filter) return;
+        counts[node.category]++;
+        const container = node.category === 'simulation' ? navSimulation
+                        : node.category === 'development' ? navDevelopment
+                        : navGaming;
 
-        const colorClass = phaseColors[phaseKey];
-        const badgeClass = phaseBadges[phaseKey];
+        const link = document.createElement('button');
+        link.id = `nav-btn-${node.id}`;
+        link.onclick = () => selectNode(node.id);
+        link.className = `w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-xs font-medium transition-all duration-200 border border-transparent text-slate-400 hover:bg-slate-900 hover:text-slate-200`;
 
-        const card = document.createElement('div');
-        card.className = `group bg-slate-900/40 border rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-950/50 ${colorClass}`;
-        
-        card.innerHTML = `
-          <!-- Image Container -->
-          <div class="relative h-48 bg-slate-950 overflow-hidden border-b border-slate-800/50">
-            <img src="${node.image}" alt="${node.title}" onerror="this.onerror=null; this.src='images/placeholder.svg';" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100">
-            <div class="absolute top-4 left-4 bg-slate-950/80 backdrop-blur-md px-3 py-1 rounded-full border border-slate-800 flex items-center space-x-1.5">
-              <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
-              <span class="text-xs font-mono font-bold text-slate-200">${node.number}</span>
-            </div>
-            <div class="absolute bottom-4 right-4 bg-slate-950/80 backdrop-blur-md px-2.5 py-1 rounded-lg border border-slate-800 text-xs font-medium text-slate-300">
-              ${node.date}
-            </div>
-          </div>
-          
-          <!-- Content -->
-          <div class="p-6 flex flex-col justify-between h-[calc(100%-12rem)]">
-            <div>
-              <div class="flex items-center justify-between mb-3">
-                <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold border ${badgeClass}">
-                  ${node.phase.split('：')[0]}
-                </span>
-              </div>
-              <h3 class="text-lg font-bold text-white group-hover:text-brand-400 transition-colors duration-200 line-clamp-1">
-                ${node.title.split('：')[0]}
-              </h3>
-              <p class="text-xs text-slate-400 font-semibold mt-1 mb-3 line-clamp-1">
-                ${node.title.split('：')[1] || ''}
-              </p>
-              <p class="text-sm text-slate-400 leading-relaxed line-clamp-3">
-                ${node.summary}
-              </p>
-            </div>
-            
-            <div class="mt-6 pt-4 border-t border-slate-800/50 flex items-center justify-between">
-              <span class="text-xs text-slate-500 font-medium">查看详情与核心架构</span>
-              <a href="milestone.html?id=${node.id}" class="inline-flex items-center space-x-1 text-xs font-bold text-brand-400 group-hover:text-brand-300 transition-colors duration-200">
-                <span>Explore</span>
-                <svg class="w-3.5 h-3.5 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
-                </svg>
-              </a>
-            </div>
-          </div>
+        link.innerHTML = `
+          <span class="w-5 h-5 rounded-md bg-slate-950 border border-slate-800 flex items-center justify-center font-mono font-bold text-[10px] text-slate-500 group-hover:text-slate-300">
+            ${node.number}
+          </span>
+          <span class="truncate flex-1 text-left">${node.title.split('：')[0]}</span>
         `;
-        grid.appendChild(card);
-      });
-    }
-
-    function filterPhase(phase) {
-      // Update active button styles
-      const buttons = document.querySelectorAll('#filter-container button');
-      buttons.forEach(btn => {
-        btn.className = "px-4 py-2 rounded-xl text-sm font-semibold bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-white transition-all duration-200 border border-slate-800";
+        container.appendChild(link);
       });
 
-      const activeBtn = document.getElementById(`btn-${phase}`);
-      activeBtn.className = "px-4 py-2 rounded-xl text-sm font-semibold bg-brand-500 text-white transition-all duration-200";
-
-      renderMilestones(phase);
+      document.getElementById('count-simulation').innerText = counts.simulation;
+      document.getElementById('count-development').innerText = counts.development;
+      document.getElementById('count-gaming').innerText = counts.gaming;
     }
 
-    // Initial render
+    function showOverview() {
+      currentNodeId = null;
+
+      // Update nav styles
+      document.getElementById('btn-overview-nav').className = "w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold bg-brand-500 text-white shadow-lg shadow-brand-500/10 transition-all duration-200";
+
+      milestonesData.forEach(node => {
+        const btn = document.getElementById(`nav-btn-${node.id}`);
+        if (btn) btn.className = `w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-xs font-medium transition-all duration-200 border border-transparent text-slate-400 hover:bg-slate-900 hover:text-slate-200`;
+      });
+
+      // Show panel
+      document.getElementById('overview-panel').classList.remove('hidden');
+      document.getElementById('node-panel').classList.add('hidden');
+
+      // Scroll to top
+      document.getElementById('main-workspace').scrollTop = 0;
+    }
+
+    function selectNode(id) {
+      currentNodeId = id;
+      const node = milestonesData.find(n => n.id === id);
+      if (!node) return;
+
+      // Update nav styles
+      document.getElementById('btn-overview-nav').className = "w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-white transition-all duration-200 border border-slate-800";
+
+      milestonesData.forEach(n => {
+        const btn = document.getElementById(`nav-btn-${n.id}`);
+        if (!btn) return;
+        if (n.id === id) {
+          const catColor = n.category === 'simulation' ? 'border-emerald-500/30 bg-emerald-500/5 text-emerald-400 font-bold'
+                         : n.category === 'development' ? 'border-blue-500/30 bg-blue-500/5 text-blue-400 font-bold'
+                         : 'border-amber-500/30 bg-amber-500/5 text-amber-400 font-bold';
+          btn.className = `w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-xs border ${catColor}`;
+        } else {
+          btn.className = `w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-xs font-medium transition-all duration-200 border border-transparent text-slate-400 hover:bg-slate-900 hover:text-slate-200`;
+        }
+      });
+
+      // Populate Details
+      const catConfig = categoryMap[node.category];
+      const categoryBadge = document.getElementById('node-category-badge');
+      categoryBadge.innerText = catConfig.label;
+      categoryBadge.className = `px-3 py-1 rounded-full text-xs font-bold border ${catConfig.badgeClass}`;
+
+      document.getElementById('node-date').innerText = node.date;
+      document.getElementById('node-phase').innerText = node.phase;
+      document.getElementById('node-title').innerHTML = `<span class="font-mono text-brand-500 mr-2">${node.number}.</span>${node.title}`;
+      document.getElementById('node-summary').innerText = node.summary;
+
+      // Links
+      const linksContainer = document.getElementById('node-links');
+      linksContainer.innerHTML = '';
+      getNodeLinks(node).forEach(link => {
+        const config = linkTypeMap[link.type] || linkTypeMap.source;
+        const label = link.label || config.label;
+        linksContainer.innerHTML += `
+          <a href="${escapeHTML(link.url)}" target="_blank" rel="noopener noreferrer" title="${escapeHTML(label)} · ${escapeHTML(link.url)}" class="inline-flex items-center min-w-0 max-w-[13rem] space-x-1.5 text-xs font-bold transition-colors border px-3 py-1.5 rounded-lg ${config.className}">
+            <span class="shrink-0">${config.icon} ${config.label}:</span>
+            <span class="truncate">${escapeHTML(label)}</span>
+            <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+            </svg>
+          </a>
+        `;
+      });
+
+      // Image slides
+      currentImageIndex = getDefaultImageIndex(node);
+      setNodeImage(currentImageIndex);
+
+      // Core Architecture
+      const archContainer = document.getElementById('node-architecture');
+      archContainer.innerHTML = '';
+      node.architecture.forEach((arch, index) => {
+        const archCard = document.createElement('div');
+        archCard.className = "bg-slate-950/40 border border-slate-800/80 rounded-2xl p-5 hover:border-slate-700 transition-all duration-300";
+        archCard.innerHTML = `
+          <div class="flex items-center space-x-3 mb-2">
+            <span class="w-6 h-6 rounded-lg bg-brand-500/10 text-brand-400 border border-brand-500/20 flex items-center justify-center font-mono font-bold text-xs">
+              ${index + 1}
+            </span>
+            <h3 class="text-sm font-bold text-white">${arch.title}</h3>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">${arch.desc}</p>
+        `;
+        archContainer.appendChild(archCard);
+      });
+
+      // Key Contributions
+      const contribContainer = document.getElementById('node-contributions');
+      contribContainer.innerHTML = '';
+      node.contributions.forEach(contrib => {
+        const li = document.createElement('li');
+        li.className = "flex items-start space-x-3";
+        li.innerHTML = `
+          <span class="text-brand-400 mt-1">✦</span>
+          <span class="text-xs leading-relaxed text-slate-300">${contrib}</span>
+        `;
+        contribContainer.appendChild(li);
+      });
+
+      // Switch views
+      document.getElementById('overview-panel').classList.add('hidden');
+      document.getElementById('node-panel').classList.remove('hidden');
+
+      // Scroll to top
+      document.getElementById('main-workspace').scrollTop = 0;
+    }
+
+    function navigateNode(direction) {
+      if (!currentNodeId) return;
+      const currentIndex = milestonesData.findIndex(n => n.id === currentNodeId);
+      const nextIndex = currentIndex + direction;
+      if (nextIndex >= 0 && nextIndex < milestonesData.length) {
+        selectNode(milestonesData[nextIndex].id);
+      }
+    }
+
+    // Keyboard Navigation
+    document.addEventListener('keydown', (e) => {
+      if (currentNodeId) {
+        if (e.key === 'ArrowLeft') navigateNode(-1);
+        if (e.key === 'ArrowRight') navigateNode(1);
+      }
+    });
+
+    // Initial load
     window.onload = () => {
-      renderMilestones('all');
+      const savedTheme = localStorage.getItem('presentation-theme');
+      const preferredTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      setTheme(savedTheme || preferredTheme);
+      populateNavigation();
+      showOverview();
     };
   </script>
 </body>

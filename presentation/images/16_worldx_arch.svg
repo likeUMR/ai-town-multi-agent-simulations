@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img">
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f59e0b"/></marker>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#111827"/></linearGradient>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#000" flood-opacity="0.35"/></filter>
+</defs>
+<rect width="1200" height="675" fill="url(#bg)"/>
+<circle cx="1030" cy="80" r="260" fill="#f59e0b" opacity="0.12"/>
+<circle cx="130" cy="620" r="220" fill="#f59e0b" opacity="0.10"/>
+<text x="70" y="78" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="800">WorldX Pipeline</text>
+<text x="72" y="118" fill="#94a3b8" font-family="Inter, Arial, sans-serif" font-size="20">One prompt creates a living pixel world</text>
+<g filter="url(#shadow)"><rect x="70" y="185" width="246" height="130" rx="22" fill="#020617" stroke="#f59e0b" stroke-opacity="0.42"/>
+<circle cx="104" cy="219" r="18" fill="#f59e0b" opacity="0.22"/><text x="104" y="226" text-anchor="middle" fill="#f59e0b" font-family="Inter,Arial" font-size="18" font-weight="800">1</text>
+<text x="136" y="219" fill="#e2e8f0" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Orchestrator designs</text>
+<text x="136" y="243" fill="#e2e8f0" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">world</text>
+</g>
+<path d="M 320 250 L 336 250" stroke="#f59e0b" stroke-width="5" opacity="0.7" marker-end="url(#arrow)"/>
+<g filter="url(#shadow)"><rect x="342" y="185" width="246" height="130" rx="22" fill="#020617" stroke="#f59e0b" stroke-opacity="0.42"/>
+<circle cx="376" cy="219" r="18" fill="#f59e0b" opacity="0.22"/><text x="376" y="226" text-anchor="middle" fill="#f59e0b" font-family="Inter,Arial" font-size="18" font-weight="800">2</text>
+<text x="408" y="219" fill="#e2e8f0" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Image model draws assets</text>
+</g>
+<path d="M 592 250 L 608 250" stroke="#f59e0b" stroke-width="5" opacity="0.7" marker-end="url(#arrow)"/>
+<g filter="url(#shadow)"><rect x="613" y="185" width="246" height="130" rx="22" fill="#020617" stroke="#f59e0b" stroke-opacity="0.42"/>
+<circle cx="647" cy="219" r="18" fill="#f59e0b" opacity="0.22"/><text x="647" y="226" text-anchor="middle" fill="#f59e0b" font-family="Inter,Arial" font-size="18" font-weight="800">3</text>
+<text x="679" y="219" fill="#e2e8f0" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Vision model reviews map</text>
+</g>
+<path d="M 864 250 L 880 250" stroke="#f59e0b" stroke-width="5" opacity="0.7" marker-end="url(#arrow)"/>
+<g filter="url(#shadow)"><rect x="884" y="185" width="246" height="130" rx="22" fill="#020617" stroke="#f59e0b" stroke-opacity="0.42"/>
+<circle cx="918" cy="219" r="18" fill="#f59e0b" opacity="0.22"/><text x="918" y="226" text-anchor="middle" fill="#f59e0b" font-family="Inter,Arial" font-size="18" font-weight="800">4</text>
+<text x="950" y="219" fill="#e2e8f0" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Simulation model drives</text>
+<text x="950" y="243" fill="#e2e8f0" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">runtime</text>
+</g>
+</svg>
