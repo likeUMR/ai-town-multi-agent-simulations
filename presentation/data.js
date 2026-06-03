@@ -826,7 +826,6 @@ const milestonesData = [
     date: "2025年Q4 / 2026年",
     links: [
       { type: "steam", label: "Steam", url: "https://store.steampowered.com/app/3105960/Astrobuilder/" },
-      { type: "steam", label: "Demo", url: "https://store.steampowered.com/app/4054630/Astrobuilder_Demo/" },
       { type: "source", label: "陀螺专访", url: "https://m.tuoluo.cn/article/detail-10122880.html" }
     ],
     image: "images/18_astrobuilder_arch.svg",

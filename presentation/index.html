@@ -79,6 +79,22 @@
     html.light .bg-gradient-to-r.bg-clip-text {
       color: transparent !important;
     }
+    html.light .hero-banner {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(239, 246, 255, 0.94) 48%, rgba(236, 253, 245, 0.9) 100%);
+      border-color: rgba(148, 163, 184, 0.55) !important;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+    }
+    html.light .hero-kicker {
+      background-color: rgba(37, 99, 235, 0.1) !important;
+      border-color: rgba(37, 99, 235, 0.22) !important;
+      color: #1d4ed8 !important;
+    }
+    html.light .hero-title {
+      color: #0f172a !important;
+    }
+    html.light .hero-description {
+      color: #334155 !important;
+    }
     html.light .custom-scrollbar::-webkit-scrollbar-track {
       background: rgba(226, 232, 240, 0.5);
     }
@@ -202,18 +218,18 @@
       <div id="overview-panel" class="space-y-8">
 
         <!-- Hero Banner -->
-        <div class="bg-gradient-to-r from-slate-900 via-indigo-950/30 to-slate-900 border border-slate-800/80 rounded-3xl p-8 relative overflow-hidden">
+        <div class="hero-banner bg-gradient-to-r from-slate-900 via-indigo-950/30 to-slate-900 border border-slate-800/80 rounded-3xl p-8 relative overflow-hidden">
           <div class="absolute top-0 right-0 w-80 h-80 bg-brand-500/5 rounded-full blur-3xl -z-10"></div>
-          <span class="px-3 py-1 rounded-full text-xs font-semibold bg-brand-500/10 text-brand-400 border border-brand-500/20 uppercase tracking-wider">
+          <span class="hero-kicker px-3 py-1 rounded-full text-xs font-semibold bg-brand-500/10 text-brand-400 border border-brand-500/20 uppercase tracking-wider">
             Group Meeting Presentation
           </span>
-          <h1 class="mt-4 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
+          <h1 class="hero-title mt-4 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
             AI 小镇与多智能体社会模拟<br>
             <span class="bg-gradient-to-r from-blue-400 via-emerald-400 to-amber-400 bg-clip-text text-transparent">
               三大分类与技术演进全景报告
             </span>
           </h1>
-          <p class="mt-4 text-slate-400 leading-relaxed text-base max-w-4xl">
+          <p class="hero-description mt-4 text-slate-400 leading-relaxed text-base max-w-4xl">
             大模型多智能体（LLM Multi-Agent）社会模拟自2023年爆发以来，已经从学术界玩具演进为跨学科的科学工具和商业原生游戏。本报告将 19 个里程碑节点结构化地分类为**为了模拟**、**为了开发**和**为了游戏**三大板块，帮助您在组会汇报中层层递进、逻辑闭环。
           </p>
         </div>
